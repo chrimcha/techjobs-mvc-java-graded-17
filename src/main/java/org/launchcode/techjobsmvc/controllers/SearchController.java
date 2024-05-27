@@ -18,17 +18,17 @@ import static org.launchcode.techjobsmvc.controllers.ListController.columnChoice
  * Created by LaunchCode
  */
 @Controller
-//@RequestMapping("search")
+@RequestMapping("search")
 public class SearchController {
 
-    @GetMapping(value = "search")
+    @GetMapping
     public String search(Model model) {
         model.addAttribute("columns", columnChoices);
         return "search";
     }
 
     // TODO #3 - Create a handler to process a search request and render the updated search view.
-    @PostMapping("search/results")
+    @PostMapping("results")
     public String displaySearchResults(Model model, @RequestParam String searchType, @RequestParam String searchTerm) {
         model.addAttribute("searchType", searchType);
         model.addAttribute("searchTerm", searchTerm);
@@ -41,7 +41,7 @@ public class SearchController {
             model.addAttribute("title", "Jobs With All: " + searchTerm);
         } else {
             jobs = JobData.findByColumnAndValue(searchType,searchTerm);
-//            model.addAttribute("title", "Jobs with " + columnChoices.get(searchType) + ": " + searchTerm);
+            model.addAttribute("title", "Jobs with " + columnChoices.get(searchType) + ": " + searchTerm);
         }
 
         model.addAttribute("jobs", jobs);
